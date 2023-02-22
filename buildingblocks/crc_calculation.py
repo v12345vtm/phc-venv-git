@@ -55,8 +55,14 @@ def crc_usb_rs232( ext):
     startbyte = "C0 "
     stopbyte = " C1"
 
+    #C0 komt 7DE0    C1 komt 7DE1   7D komt 7D5D
+
     if startbyte in tabelcrcberekenen: return startbyte  + " ".join(tabelcrcberekenen).upper() + stopbyte + "todo :C0 moet D7worden"
     if stopbyte in tabelcrcberekenen: return startbyte  + " ".join(tabelcrcberekenen).upper() + stopbyte + "todo :C1 moet D7worden"
+
+
+
+
 
 
     return startbyte  + " ".join(tabelcrcberekenen).upper() + stopbyte
