@@ -79,6 +79,11 @@ print(crc_usb_rs232("fe 00 06 7c 80 01 01"))  #expecting     c0 fe 00 06 7c 80 0
 
 print(crc_usb_rs232("fe 00 06 7f 80 01 01"))  #expecting     c0 fe 00 06 7f 80 01 01 99 4a c1
 
+#ene met 7dE1
+# #C0 komt 7DE0    C1 komt 7DE1   7D komt 7D5D
+print(crc_usb_rs232("fe 06 0e 1f 01 f0"))  #expecting         c0 00 fe 06 0e 1f 01 f0 ae 7d e1 c1               À.þ....ð®}áÁ
+
+#c0 fe 00 01 14 40 7d e0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 6e d4 c1
 
 
 
