@@ -69,7 +69,10 @@ print(crc_rs485("fe 00 05 0d"))  #expecting : fe 00 05 0d ea 80
 print(crc_usb_rs232("fe 00 05 0d"))  #expecting : c0 fe 00 05 0d ea 80 c1
 
 
-print(crc_usb_rs232("00 fe 01 1b"))  #expecting
+print(crc_usb_rs232("fe 00 06 7c 80 01 01"))  #expecting     c0 fe 00 06 7c 80 01 01 54 6f c1                  Àþ..|€..ToÁ
+
+print(crc_usb_rs232("fe 00 06 7f 80 01 01"))  #expecting     c0 fe 00 06 7f 80 01 01 99 4a c1
+
 
 
 
