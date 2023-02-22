@@ -61,6 +61,7 @@ def voorkeurscompoortnenem(lijstcompoorten):
 
 
 gevondencompoort= voorkeurscompoortnenem(overzichtcompoorten)
+gevondencompoort= "COM8"
 from time import sleep
 import serial
 
@@ -79,7 +80,7 @@ serielepoort.write(b'\n\nhello from python\n' )
 while 1:
 
     sleep(0.2)
-    commando = "A0 01 01 4A C2"
+    commando = "c0 fe 00 05 0d ea 80 c1"  #stm0 what is your firmwareversion ? response is 2.28 :     c0 00 fe 05 0e 14 00 03 16 02 17 39 39 a1 91 c1
     zendtabel = commando.split(' ')
     for el in zendtabel:
         d = int(el ,16)
