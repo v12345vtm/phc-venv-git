@@ -61,7 +61,7 @@ def voorkeurscompoortnenem(lijstcompoorten):
 
 
 gevondencompoort= voorkeurscompoortnenem(overzichtcompoorten)
-gevondencompoort= "COM8"
+gevondencompoort= "COM8" #override as debug
 from time import sleep
 import serial
 
