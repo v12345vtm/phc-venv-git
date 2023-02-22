@@ -54,6 +54,11 @@ def crc_usb_rs232( ext):
     tabelcrcberekenen.append(crcdeel2)
     startbyte = "C0 "
     stopbyte = " C1"
+
+    if startbyte in tabelcrcberekenen: return startbyte  + " ".join(tabelcrcberekenen).upper() + stopbyte + "todo :C0 moet D7worden"
+    if stopbyte in tabelcrcberekenen: return startbyte  + " ".join(tabelcrcberekenen).upper() + stopbyte + "todo :C1 moet D7worden"
+
+
     return startbyte  + " ".join(tabelcrcberekenen).upper() + stopbyte
 #####################end functie crc berekenen
 
@@ -62,5 +67,12 @@ def crc_usb_rs232( ext):
 print(crc_rs485("fe 00 05 0d"))  #expecting : fe 00 05 0d ea 80
 
 print(crc_usb_rs232("fe 00 05 0d"))  #expecting : c0 fe 00 05 0d ea 80 c1
+
+
+print(crc_usb_rs232("00 fe 01 1b"))  #expecting
+
+
+
+
 
 
