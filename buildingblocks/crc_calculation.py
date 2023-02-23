@@ -32,6 +32,7 @@ def crc_rs485( ext):
 #####################start functie crc berekenen
 def crc_usb_rs232( ext):
     tabelcrcberekenen = list()
+    ext = ext.upper()
     tabelcrcberekenen = ext.split(' ')
     tempcrc = int(65535)
     for x in tabelcrcberekenen:
@@ -74,11 +75,10 @@ def crc_usb_rs232( ext):
 
     return startbyte +" " + " ".join(tabelcrcberekenen).upper() + " " + stopbyte
 #####################end functie crc berekenen
-
+print(crc_usb_rs232("fe 00 01 14 40 c0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff"))  #expecting c0 fe 00 01 14 40 7d e0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 6e d4 c1 = NOT correct
 print(crc_usb_rs232("fe 00 06 05 00 01 01"))  #expecting c0 fe 00 06 05 00 01 01 9e 7d e0 c1 = correct
 print(crc_usb_rs232("00 fe 01 44"))  #expecting c0 00 fe 01 44 09 7d 5d c1 = correct
 print(crc_usb_rs232("00 fe 06 0e 1f 01 f0"))  #expecting c0 00 fe 06 0e 1f 01 f0 ae 7d e1 c1 = correct
-print(crc_usb_rs232("fe 00 01 14 40 c0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff"))  #expecting c0 fe 00 01 14 40 7d e0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 6e d4 c1 = NOT correct
 
 
 
