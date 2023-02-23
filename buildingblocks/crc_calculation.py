@@ -52,21 +52,33 @@ def crc_usb_rs232( ext):
     crcdeel2 = crcstring[3] + crcstring[4]
     tabelcrcberekenen.append(crcdeel1)
     tabelcrcberekenen.append(crcdeel2)
-    startbyte = "C0 "
-    stopbyte = " C1"
+    startbyte = "C0"
+    stopbyte = "C1"
 
     #C0 komt 7DE0    C1 komt 7DE1   7D komt 7D5D
 
-    if startbyte in tabelcrcberekenen: return startbyte  + " ".join(tabelcrcberekenen).upper() + stopbyte + "todo :C0 moet D7worden"
-    if stopbyte in tabelcrcberekenen: return startbyte  + " ".join(tabelcrcberekenen).upper() + stopbyte + "todo :C1 moet D7worden"
+    for value in range(len(tabelcrcberekenen)):
+        if tabelcrcberekenen[value] == '7D':
+            tabelcrcberekenen[value] = '7D*5D'
 
 
+        if tabelcrcberekenen[value] == 'C0':
+            tabelcrcberekenen[value] = '7D*E0'
+
+        if tabelcrcberekenen[value] == 'C1':
+            tabelcrcberekenen[value] = '7D*E1'
+
+        if tabelcrcberekenen[value] == '7D':
+            tabelcrcberekenen[value] = '7D*5D'
 
 
-
-
-    return startbyte  + " ".join(tabelcrcberekenen).upper() + stopbyte
+    return startbyte +" " + " ".join(tabelcrcberekenen).upper() + " " + stopbyte
 #####################end functie crc berekenen
+
+print(crc_usb_rs232("fe 00 06 05 00 01 01"))  #expecting c0 fe 00 06 05 00 01 01 9e 7d e0 c1 = correct
+print(crc_usb_rs232("00 fe 01 44"))  #expecting c0 00 fe 01 44 09 7d 5d c1 = correct
+print(crc_usb_rs232("00 fe 06 0e 1f 01 f0"))  #expecting c0 00 fe 06 0e 1f 01 f0 ae 7d e1 c1 = correct
+print(crc_usb_rs232("fe 00 01 14 40 c0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff"))  #expecting c0 fe 00 01 14 40 7d e0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 6e d4 c1 = NOT correct
 
 
 
@@ -84,9 +96,6 @@ print(crc_usb_rs232("fe 00 06 7f 80 01 01"))  #expecting     c0 fe 00 06 7f 80 0
 print(crc_usb_rs232("fe 06 0e 1f 01 f0"))  #expecting         c0 00 fe 06 0e 1f 01 f0 ae 7d e1 c1               À.þ....ð®}áÁ
 
 #c0 fe 00 01 14 40 7d e0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 6e d4 c1
-
-
-
 
 
 
