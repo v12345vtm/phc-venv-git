@@ -54,14 +54,8 @@ def voorkeurscompoortnenem(lijstcompoorten):
             print(f' voorkeurpoort {voorkeurpoort}   ')
             return  voorkeurpoort
 
-
-
-
-
-
-
 gevondencompoort= voorkeurscompoortnenem(overzichtcompoorten)
-gevondencompoort= "COM9" #override as debug
+gevondencompoort= "COM8" #override as debug
 from time import sleep
 import serial
 
@@ -85,7 +79,7 @@ while 1:
     zendtabel = commando.split(' ')
     for el in zendtabel:
         d = int(el ,16)
-        dd = bytes([d])s
+        dd = bytes([d])
         serielepoort.write(dd)
     print(f"sended : {commando}")
 
