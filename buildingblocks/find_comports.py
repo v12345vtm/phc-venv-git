@@ -85,7 +85,7 @@ while 1:
     zendtabel = commando.split(' ')
     for el in zendtabel:
         d = int(el ,16)
-        dd = bytes([d]²&)
+        dd = bytes([d])s
         serielepoort.write(dd)
     print(f"sended : {commando}")
 
