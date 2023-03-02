@@ -30,13 +30,10 @@ def decode_crc_usb_rs232( datastring):
     #remove the crc (2 bytes ) we don't need them anymore
     list_datastring.pop(-1)  # remove last byte crc
     list_datastring.pop(-1)  # remove last byte crc
-
-
     return  " ".join(list_datastring).upper()
 
 #####################start functie crc berekenen
 def crc_rs485( ext):
-    tabelcrcberekenen = list()
     tabelcrcberekenen = ext.split(' ')
     tempcrc = int(65535)
     for x in tabelcrcberekenen:
@@ -64,7 +61,6 @@ def crc_rs485( ext):
 
 #####################start functie crc berekenen
 def crc_usb_rs232( ext):
-    tabelcrcberekenen = list()
     ext = ext.upper()
     tabelcrcberekenen = ext.split(' ')
     tempcrc = int(65535)
@@ -108,44 +104,102 @@ def crc_usb_rs232( ext):
 
     return startbyte +" " + " ".join(tabelcrcberekenen).upper() + " " + stopbyte
 #####################end functie crc berekenen
-print(crc_usb_rs232("fe 00 01 14 40 c0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff"))  #expecting c0 fe 00 01 14 40 7d e0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 6e d4 c1 = NOT correct
 INPUT =  "fe 00 01 14 40 c0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff"
 expecting ="c0 fe 00 01 14 40 7d e0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 6e d4 c1"
+INPUTcrc = crc_usb_rs232(INPUT.upper())
+BACKtoINPUT = decode_crc_usb_rs232(INPUTcrc.upper())
+print("***************")
+print("calcrcr      ",INPUTcrc.upper())
+print("expected     ",expecting.upper())
+print("in           " ,INPUT.upper())
+print("backto input " , BACKtoINPUT.upper())
+print("***************")
+
+
+INPUT =  "fe 00 06 05 00 01 01"
+expecting ="c0 fe 00 06 05 00 01 01 9e 7d e0 c1"
+INPUTcrc = crc_usb_rs232(INPUT.upper())
+BACKtoINPUT = decode_crc_usb_rs232(INPUTcrc.upper())
+print("***************")
+print("calcrcr      ",INPUTcrc.upper())
+print("expected     ",expecting.upper())
+print("in           " ,INPUT.upper())
+print("backto input " , BACKtoINPUT.upper())
+print("***************")
+
+
+
+
+INPUT =  "00 fe 01 44"
+expecting ="c0 00 fe 01 44 09 7d 5d c1"
+INPUTcrc = crc_usb_rs232(INPUT.upper())
+BACKtoINPUT = decode_crc_usb_rs232(INPUTcrc.upper())
+print("***************")
+print("calcrcr      ",INPUTcrc.upper())
+print("expected     ",expecting.upper())
+print("in           " ,INPUT.upper())
+print("backto input " , BACKtoINPUT.upper())
+print("***************")
+
+
+
+INPUT =  "00 fe 06 0e 1f 01 f0"
+expecting ="c0 00 fe 06 0e 1f 01 f0 ae 7d e1 c1"
+INPUTcrc = crc_usb_rs232(INPUT.upper())
+BACKtoINPUT = decode_crc_usb_rs232(INPUTcrc.upper())
+print("***************")
+print("calcrcr      ",INPUTcrc.upper())
+print("expected     ",expecting.upper())
+print("in           " ,INPUT.upper())
+print("backto input " , BACKtoINPUT.upper())
+print("***************")
+
+
+INPUT =  "00 fe 06 0e 1f 01 f0"
+expecting ="c0 00 fe 06 0e 1f 01 f0 ae 7d e1 c1"
+INPUTcrc = crc_usb_rs232(INPUT.upper())
+BACKtoINPUT = decode_crc_usb_rs232(INPUTcrc.upper())
+print("***************")
+print("calcrcr      ",INPUTcrc.upper())
+print("expected     ",expecting.upper())
+print("in           " ,INPUT.upper())
+print("backto input " , BACKtoINPUT.upper())
+print("***************")
+
+
+INPUT =  "FE 00 06 05 00 01 01"
+expecting ="C0 FE 00 06 05 00 01 01 9E 7D E0 C1"
 INPUTcrc = crc_usb_rs232(INPUT)
 BACKtoINPUT = decode_crc_usb_rs232(INPUTcrc)
-
 print("***************")
-print("calcrcr      ",INPUTcrc)
-print("expected     ",expecting)
-print("in           " ,INPUT)
-print("backto input " , BACKtoINPUT)
-
+print("calcrcr      ",INPUTcrc.upper())
+print("expected     ",expecting.upper())
+print("in           " ,INPUT.upper())
+print("backto input " , BACKtoINPUT.upper())
 print("***************")
 
-print(decode_crc_usb_rs232(crc_usb_rs232("fe 00 01 14 40 c0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff")))  #expecting c0 fe 00 01 14 40 7d e0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 6e d4 c1 = NOT correct
-
-print(" **")
-print(crc_usb_rs232("fe 00 06 05 00 01 01"))  #expecting c0 fe 00 06 05 00 01 01 9e 7d e0 c1 = correct
-print(crc_usb_rs232("00 fe 01 44"))  #expecting c0 00 fe 01 44 09 7d 5d c1 = correct
-print(crc_usb_rs232("00 fe 06 0e 1f 01 f0"))  #expecting c0 00 fe 06 0e 1f 01 f0 ae 7d e1 c1 = correct
 
 
-
-print(crc_rs485("fe 00 05 0d"))  #expecting : fe 00 05 0d ea 80
-
-print(crc_usb_rs232("fe 00 05 0d"))  #expecting : c0 fe 00 05 0d ea 80 c1
-
-
-print(crc_usb_rs232("fe 00 06 7c 80 01 01"))  #expecting     c0 fe 00 06 7c 80 01 01 54 6f c1                  Àþ..|€..ToÁ
-
-print(crc_usb_rs232("fe 00 06 7f 80 01 01"))  #expecting     c0 fe 00 06 7f 80 01 01 99 4a c1
-
-#ene met 7dE1
-# #C0 komt 7DE0    C1 komt 7DE1   7D komt 7D5D
-print(crc_usb_rs232("fe 06 0e 1f 01 f0"))  #expecting         c0 00 fe 06 0e 1f 01 f0 ae 7d e1 c1               À.þ....ð®}áÁ
-print(crc_usb_rs232("FE 00 06 05 00 01 01"))  #expecting 9e c0
-
-#c0 fe 00 01 14 40 7d e0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 6e d4 c1
+INPUT =  "fe 00 30 00 06"
+expecting ="c0 fe 00 30 00 06 f1 d2 c1"
+INPUTcrc = crc_usb_rs232(INPUT)
+BACKtoINPUT = decode_crc_usb_rs232(INPUTcrc)
+print("*****wat is u spanning?**********")
+print("calcrcr      ",INPUTcrc.upper())
+print("expected     ",expecting.upper())
+print("in           " ,INPUT.upper())
+print("backto input " , BACKtoINPUT.upper())
+print("***************")
 
 
 
+INPUT =  "00 fe 30 01 06 31 39 2c 35 56"
+expecting ="c0 00 fe 30 01 06 31 39 2c 35 56 26 cb c1"
+INPUTcrc = crc_usb_rs232(INPUT)
+BACKtoINPUT = decode_crc_usb_rs232(INPUTcrc)
+print("*****19,5V**********")
+print("calcrcr      ",INPUTcrc.upper())
+print("expected     ",expecting.upper())
+print("in           " ,INPUT.upper())
+print("backto input " , BACKtoINPUT.upper())
+print("***************")
