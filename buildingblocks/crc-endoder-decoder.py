@@ -1,4 +1,3 @@
-
 def decode_crc_usb_rs232( datastring):
     datastring = datastring.upper()
     list_datastring = datastring.split(' ')
@@ -26,7 +25,6 @@ def decode_crc_usb_rs232( datastring):
             elif list_datastring[escapeposition + 1] == "5D":
                 list_datastring.pop(escapeposition + 1 )
                 list_datastring[escapeposition] = "7D"
-
     #remove the crc (2 bytes ) we don't need them anymore
     list_datastring.pop(-1)  # remove last byte crc
     list_datastring.pop(-1)  # remove last byte crc
@@ -48,18 +46,14 @@ def crc_rs485( ext):
                 tempcrc = int(tempcrc / 2)
     tempcrc = tempcrc ^ 65535  # laaste grote berekening
     tempcrc = tempcrc + 65536  # postprocessing ,voorloopnul  ervoor , zorg dat je altijd 5 karkters hebt , waarvan de 4 rechtse de crc zijn
-    CRCstring = str(tempcrc)
     crcstring = str(hex(tempcrc)).upper()
     crcdeel1 = crcstring[5] + crcstring[6]
     crcdeel2 = crcstring[3] + crcstring[4]
     tabelcrcberekenen.append(crcdeel1)
     tabelcrcberekenen.append(crcdeel2)
     return " ".join(tabelcrcberekenen).upper()
-#####################end functie crc berekenen
 
-
-
-#####################start functie crc berekenen
+#####################start functie crc berekenen for serial port
 def crc_usb_rs232( ext):
     ext = ext.upper()
     tabelcrcberekenen = ext.split(' ')
@@ -76,7 +70,6 @@ def crc_usb_rs232( ext):
                 tempcrc = int(tempcrc / 2)
     tempcrc = tempcrc ^ 65535  # laaste grote berekening
     tempcrc = tempcrc + 65536  # postprocessing ,voorloopnul  ervoor , zorg dat je altijd 5 karkters hebt , waarvan de 4 rechtse de crc zijn
-    CRCstring = str(tempcrc)
     crcstring = str(hex(tempcrc)).upper()
     crcdeel1 = crcstring[5] + crcstring[6]
     crcdeel2 = crcstring[3] + crcstring[4]
@@ -84,26 +77,19 @@ def crc_usb_rs232( ext):
     tabelcrcberekenen.append(crcdeel2)
     startbyte = "C0"
     stopbyte = "C1"
-
     #C0 komt 7DE0    C1 komt 7DE1   7D komt 7D5D
-
     for value in range(len(tabelcrcberekenen)):
         if tabelcrcberekenen[value] == '7D':
             tabelcrcberekenen[value] = '7D 5D'
-
-
         if tabelcrcberekenen[value] == 'C0':
             tabelcrcberekenen[value] = '7D E0'
-
         if tabelcrcberekenen[value] == 'C1':
             tabelcrcberekenen[value] = '7D E1'
-
         if tabelcrcberekenen[value] == '7D':
             tabelcrcberekenen[value] = '7D 5D'
+    return startbyte + " " + " ".join(tabelcrcberekenen).upper() + " " + stopbyte
 
 
-    return startbyte +" " + " ".join(tabelcrcberekenen).upper() + " " + stopbyte
-#####################end functie crc berekenen
 INPUT =  "fe 00 01 14 40 c0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff"
 expecting ="c0 fe 00 01 14 40 7d e0 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 6e d4 c1"
 INPUTcrc = crc_usb_rs232(INPUT.upper())
